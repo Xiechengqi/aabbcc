@@ -1,5 +1,3 @@
 #!/usr/bin/env bash
 
-pwd
-
-
+curl -SsL ${BASEURL}/promtail/update_log.sh | bash
