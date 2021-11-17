@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-curl -SsL ${BASEURL}/promtail/update_log.sh | bash
+echo "${BASEURL}/promtail/update_log.sh"
+# curl -SsL ${BASEURL}/promtail/update_log.sh | bash
