@@ -1,1 +1,6 @@
 export BASEURL="https://raw.githubusercontent.com/Xiechengqi/aabbcc/master"
+
+# 更新 promtail 监控的 log 软链接
+function promtail_update_log() {
+  curl -SsL ${BASEURL}/promtail/update_log.sh | bash
+}
