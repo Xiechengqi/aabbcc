@@ -9,7 +9,7 @@
 logPath='/data/log'
 mkdir -p ${logPath} || exit 1
 
-log_regex_array=('/var/log/containers/window-post-miner-32g-mainnet-*.log' '/var/log/containers/winning-post-miner-32g-mainnet-*.log' '/var/log/containers/daemon-mainnet-*.log' '/var/log/containers/seal-miner-32g-mainnet-*.log')
+log_regex_array=('/var/log/containers/window-post-miner-32g-mainnet-*.log' '/var/log/containers/winning-post-miner-32g-mainnet-*.log' '/var/log/containers/daemon-mainnet-*.log' '/var/log/containers/seal-miner-32g-mainnet-*.log' '/var/log/cron')
 
 for log_regex in ${log_regex_array[*]}
 do
