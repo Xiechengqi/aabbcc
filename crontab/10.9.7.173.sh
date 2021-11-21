@@ -2,4 +2,4 @@
 
 promtail_update_log
 
-ps axu | grep '/data/client-exporter/client-exporter.py' &> /dev/null || nohup python3 /data/client-exporter/client-exporter.py &> /dev/null &
+ps axu | grep '/data/client-exporter/client-exporter.py' | grep -v grep || nohup python3 /data/client-exporter/client-exporter.py &> /dev/null &
