@@ -20,7 +20,7 @@ cat > ${metricPath}/.lotus-metric << EOF
 lotus_storage_health{hostname="$(hostname)"} ${lotus_storage_health}
 EOF
 
-mv ${metricPath}/.lotus-metric ${metricPath}/lotus.prom
+mv ${metricPath}/.lotus-metric ${metricPath}/lotus-metric.prom
 }
 
 main $@
