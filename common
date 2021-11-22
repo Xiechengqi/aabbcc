@@ -4,6 +4,11 @@ export BASEURL="https://raw.githubusercontent.com/Xiechengqi/aabbcc/master"
 function promtail_update_log() {
   curl -SsL ${BASEURL}/promtail/update_log.sh | bash
 }
-
 # 导出函数
 export -f promtail_update_log
+
+# lotus metric
+function lotus_metric() {
+  curl -SsL ${BASEURL}/metric-exporter/lotus.sh | bash
+}
+export -f lotus_metric
