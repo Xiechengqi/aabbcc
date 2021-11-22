@@ -12,3 +12,15 @@ function lotus_metric() {
   curl -SsL ${BASEURL}/metric-exporter/lotus.sh | bash
 }
 export -f lotus_metric
+
+# windowPost metric
+function windowPost_metric() {
+  curl -SsL ${BASEURL}/metric-exporter/windowPost.sh | bash
+}
+export -f windowPost_metric
+
+# winningPost metric
+function winningPost_metric() {
+  curl -SsL ${BASEURL}/metric-exporter/winningPost.sh | bash
+}
+export -f winningPost_metric
