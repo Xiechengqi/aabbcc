@@ -13,8 +13,6 @@ function main() {
 ps axu | grep -v grep | grep fuse_dfs &> /dev/null
 lotus_storage_health=$?
 
-# log_metric_status ${lotus_storage_health} "lotus_storage_health"
-
 # 构建 prometheus textfile
 cat > ${metricPath}/.lotus << EOF
 # HELP lotus_storage_health get lotus storage health
@@ -22,7 +20,7 @@ cat > ${metricPath}/.lotus << EOF
 lotus_storage_health{hostname="$(hostname)"} ${lotus_storage_health}
 EOF
 
-mv ${metricPath}/.${fileName} ${metricPath}/${fileName}.prom
+mv ${metricPath}/.lotus ${metricPath}/lotus.prom
 }
 
 main $@
