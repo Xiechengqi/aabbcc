@@ -11,7 +11,13 @@ metricPath='/data/metric' && mkdir -p ${metricPath} || exit 1
 function main() {
 # 收集指标
 windowPost_run_time=$(grep 'computing window post' /var/log/containers/window-post-miner-32g-mainnet-poster*.log | tail -1 | awk -F 'elapsed' '{print $NF}' | awk -F '}' '{print $1}' | awk '{print $NF}')
-windowPost_run_timestamp=$(date -d $(grep 'computing window post' /var/log/containers/window-post-miner-32g-mainnet-poster*.log | tail -1 | awk -F 'u' '{print $1}' | cut -c 9- | rev | cut -c 2- | rev) +%s)
+windowPost_run_timestamp_tmp=$(grep 'computing window post' /var/log/containers/window-post-miner-32g-mainnet-poster*.log | tail -1 | awk -F 'u' '{print $1}' | cut -c 9- | rev | cut -c 2- | rev)
+if [ "${windowPost_run_timestamp_tmp}" = "" ]
+then
+windowPost_run_timestamp="0"
+else
+windowPost_run_timestamp=$(date -d ${windowPost_run_timestamp_tmp} +%s)
+fi
 
 # 构建 prometheus textfile
 cat > ${metricPath}/.windowPost-metric << EOF
