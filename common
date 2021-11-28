@@ -24,3 +24,9 @@ function winningPost_metric() {
   curl -SsL ${BASEURL}/metric-exporter/winningPost.sh | bash
 }
 export -f winningPost_metric
+
+# nvidia metric
+function nvidia_metric() {
+  curl -SsL ${BASEURL}/metric-exporter/nvidia.sh | bash
+}
+export -f nvidia_metric 
