@@ -16,7 +16,7 @@ function main() {
 # 收集指标
 # 最新一次 windowPoST 运行时间
 windowPost_run_time=$(grep 'computing window post' /var/log/containers/window-post-miner-32g-mainnet-poster*.log | tail -1 | awk -F 'elapsed' '{print $NF}' | awk -F '}' '{print $1}' | awk '{print $NF}')
-windowPost_run_timestamp_tmp=$(grep 'computing window post' /var/log/containers/window-post-miner-32g-mainnet-poster*.log | tail -1 | awk -F 'u' '{print $1}' | cut -c 9- | rev | cut -c 2- | rev)
+windowPost_run_timestamp_tmp=$(grep 'computing window post' /var/log/containers/window-post-miner-32g-mainnet-poster*.log | tail -1 | awk -F '"log":"' '{print $NF}' | awk -F '\' '{print $1}')
 if [ "${windowPost_run_timestamp_tmp}" = "" ]
 then
 windowPost_run_timestamp="0"
