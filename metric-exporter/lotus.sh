@@ -6,7 +6,11 @@
 # get lotus metric
 #
 
-metricPath='/data/metric' && mkdir -p ${metricPath} || exit 1
+metricPath='/data/metric'
+if [ ! -d ${metricPath} ]
+then
+mkdir -p ${metricPath} || exit 1
+fi
 
 function main() {
 # 收集指标
