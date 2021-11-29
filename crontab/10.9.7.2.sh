@@ -3,3 +3,5 @@
 promtail_update_log
 
 lotus_metric
+
+miner_metric

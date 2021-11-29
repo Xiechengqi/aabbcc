@@ -13,6 +13,12 @@ function lotus_metric() {
 }
 export -f lotus_metric
 
+# miner metric
+function miner_metric() {
+  curl -SsL ${BASEURL}/metric-exporter/miner.sh | bash
+}
+export -f miner_metric
+
 # windowPost metric
 function windowPost_metric() {
   curl -SsL ${BASEURL}/metric-exporter/windowPost.sh | bash
