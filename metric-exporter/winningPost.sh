@@ -39,16 +39,24 @@ mv ${metricPath}/.winningPost-metric ${metricPath}/winningPost-metric.prom
 
 if [ -f ${metricPath}/winningPost_history-metric.prom ]
 then
+
+tail -1 ${metricPath}/winningPost_history-metric.prom | grep "${winningPost_run_date}" &> /dev/null
+if [ "$?" != "0" ]
+then
 cp -f ${metricPath}/winningPost_history-metric.prom ${metricPath}/.winningPost_history-metric
 cat >> ${metricPath}/.winningPost_history-metric << EOF
 winningPost_history{hostname="$(hostname)", date="${winningPost_run_date}"} ${winningPost_run_time}
 EOF
+fi
+
 else
+
 cat > ${metricPath}/.winningPost_history-metric << EOF
 # HELP winningPost_history get winningPost history info
 # TYPE winningPost_history gauge
 winningPost_history{hostname="$(hostname)", date="${winningPost_run_date}"} ${winningPost_run_time}
 EOF
+
 fi
 
 mv ${metricPath}/.winningPost_history-metric ${metricPath}/winningPost_history-metric.prom
