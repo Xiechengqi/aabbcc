@@ -2,7 +2,7 @@
 
 #
 # xiechengqi
-# 2021/11/22
+# 2021/12/03
 # get WindowPoST metric
 #
 
@@ -20,8 +20,10 @@ windowPost_run_timestamp_tmp=$(grep 'computing window post' /var/log/containers/
 if [ "${windowPost_run_timestamp_tmp}" = "" ]
 then
 windowPost_run_timestamp="0"
+winningPost_run_date="0-0-0 00:00:00"
 else
 windowPost_run_timestamp=$(date -d ${windowPost_run_timestamp_tmp} +%s)
+windowPost_run_date=$(date '+%Y-%m-%d %H:%M:%S' -d @${winningPost_run_timestamp})
 fi
 
 # 最新一次 windowPoST 运行失败
@@ -47,6 +49,31 @@ windowPost_fail_timestamp{hostname="$(hostname)"} ${windowPost_fail_timestamp}
 EOF
 
 mv ${metricPath}/.windowPost-metric ${metricPath}/windowPost-metric.prom
+
+if [ -f ${metricPath}/windowPost_history-metric.prom ]
+then
+
+tail -1 ${metricPath}/windowPost_history-metric.prom | grep "${windowPost_run_date}" &> /dev/null
+if [ "$?" != "0" ]
+then
+cp -f ${metricPath}/windowPost_history-metric.prom ${metricPath}/.windowPost_history-metric
+cat >> ${metricPath}/.windowPost_history-metric << EOF
+windowPost_history{hostname="$(hostname)", date="${windowPost_run_date}"} ${windowPost_run_time}
+EOF
+fi
+
+else
+
+cat > ${metricPath}/.windowPost_history-metric << EOF
+# HELP windowPost_history get windowPost history info
+# TYPE windowPost_history gauge
+windowPost_history{hostname="$(hostname)", date="${windowPost_run_date}"} ${windowPost_run_time}
+EOF
+
+fi
+
+mv ${metricPath}/.windowPost_history-metric ${metricPath}/windowPost_history-metric.prom
+
 }
 
 main $@
