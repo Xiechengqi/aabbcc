@@ -2,7 +2,7 @@
 
 #
 # xiechengqi
-# 2021/11/22
+# 2021/12/03
 # get winningPost metric
 #
 
@@ -27,9 +27,6 @@ fi
 
 # 构建 prometheus textfile
 cat > ${metricPath}/.winningPost-metric << EOF
-# HELP winningPost_info get winningPost info
-# TYPE winningPost_info gauge
-winningPost_info{hostname="$(hostname)", date="${winningPost_run_date}"} ${winningPost_run_time}
 # HELP winningPost_run_time get winningPost run time
 # TYPE winningPost_run_time gauge
 winningPost_run_time{hostname="$(hostname)"} ${winningPost_run_time}
@@ -39,6 +36,23 @@ winningPost_run_timestamp{hostname="$(hostname)"} ${winningPost_run_timestamp}
 EOF
 
 mv ${metricPath}/.winningPost-metric ${metricPath}/winningPost-metric.prom
+
+if [ -f ${metricPath}/winningPost_history-metric.prom ]
+then
+cp -f ${metricPath}/winningPost_history-metric.prom ${metricPath}/.winningPost_history-metric
+cat >> ${metricPath}/.winningPost_history-metric << EOF
+winningPost_history{hostname="$(hostname)", date="${winningPost_run_date}"} ${winningPost_run_time}
+EOF
+else
+cat > ${metricPath}/.winningPost_history-metric << EOF
+# HELP winningPost_history get winningPost history info
+# TYPE winningPost_history gauge
+winningPost_history{hostname="$(hostname)", date="${winningPost_run_date}"} ${winningPost_run_time}
+EOF
+fi
+
+mv ${metricPath}/.winningPost_history-metric ${metricPath}/winningPost_history-metric.prom
+
 }
 
 main $@
