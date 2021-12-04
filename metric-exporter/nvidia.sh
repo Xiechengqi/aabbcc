@@ -2,7 +2,7 @@
 
 #
 # xiechengqi
-# 2021/11/28
+# 2021/12/04
 # get Nvidia GPU metric
 #
 
@@ -21,7 +21,7 @@ nvidia_num=$(nvidia-smi | grep GeForce | wc -l)
 cat > ${metricPath}/.nvidia-metric << EOF
 # HELP nvidia_num get nvidia gpu number
 # TYPE nvidia_num gauge
-nvidia_num{hostname="$(hostname)"} ${nvidia_num}
+nvidia_num{ip="$(hostname -I | awk '{print $1}')", hostname="$(hostname)"} ${nvidia_num}
 EOF
 
 mv ${metricPath}/.nvidia-metric ${metricPath}/nvidia-metric.prom
