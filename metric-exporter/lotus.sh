@@ -21,7 +21,7 @@ lotus_storage_health=$?
 cat > ${metricPath}/.lotus-metric << EOF
 # HELP lotus_storage_health get lotus storage health
 # TYPE lotus_storage_health gauge
-lotus_storage_health{hostname="$(hostname)"} ${lotus_storage_health}
+lotus_storage_health{ip="$(hostname -I | awk '{print $1}')", hostname="$(hostname)"} ${lotus_storage_health}
 EOF
 
 mv ${metricPath}/.lotus-metric ${metricPath}/lotus-metric.prom
