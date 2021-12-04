@@ -13,6 +13,9 @@ mkdir -p ${metricPath} || exit 1
 fi
 
 function main() {
+
+ip="$(hostname -I | awk '{print $1}')"
+
 # 收集指标
 # 最新一次 windowPoST 运行时间
 windowPost_run_time=$(grep 'computing window post' /var/log/containers/window-post-miner-32g-mainnet-poster*.log | tail -1 | awk -F 'elapsed' '{print $NF}' | awk -F '}' '{print $1}' | awk '{print $NF}')
@@ -39,13 +42,13 @@ fi
 cat > ${metricPath}/.windowPost-metric << EOF
 # HELP windowPost_run_time get windowPost run time
 # TYPE windowPost_run_time gauge
-windowPost_run_time{hostname="$(hostname)"} ${windowPost_run_time}
+windowPost_run_time{ip="${ip}", hostname="$(hostname)"} ${windowPost_run_time}
 # HELP windowPost_run_timestamp get windowPost run timestamp
 # TYPE windowPost_run_timestamp gauge
-windowPost_run_timestamp{hostname="$(hostname)"} ${windowPost_run_timestamp}
+windowPost_run_timestamp{ip="${ip}", hostname="$(hostname)"} ${windowPost_run_timestamp}
 # HELP windowPost_fail_timestamp get windowPost fail timestamp
 # TYPE windowPost_fail_timestamp gauge
-windowPost_fail_timestamp{hostname="$(hostname)"} ${windowPost_fail_timestamp}
+windowPost_fail_timestamp{ip="${ip}", hostname="$(hostname)"} ${windowPost_fail_timestamp}
 EOF
 
 mv ${metricPath}/.windowPost-metric ${metricPath}/windowPost-metric.prom
@@ -58,7 +61,7 @@ if [ "$?" != "0" ]
 then
 cp -f ${metricPath}/windowPost_history-metric.prom ${metricPath}/.windowPost_history-metric
 cat >> ${metricPath}/.windowPost_history-metric << EOF
-windowPost_history{hostname="$(hostname)", date="${windowPost_run_date}"} ${windowPost_run_time}
+windowPost_history{ip="${ip}", hostname="$(hostname)", date="${windowPost_run_date}"} ${windowPost_run_time}
 EOF
 fi
 
@@ -67,7 +70,7 @@ else
 cat > ${metricPath}/.windowPost_history-metric << EOF
 # HELP windowPost_history get windowPost history info
 # TYPE windowPost_history gauge
-windowPost_history{hostname="$(hostname)", date="${windowPost_run_date}"} ${windowPost_run_time}
+windowPost_history{ip="${ip}", hostname="$(hostname)", date="${windowPost_run_date}"} ${windowPost_run_time}
 EOF
 
 fi
