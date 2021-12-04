@@ -13,6 +13,9 @@ mkdir -p ${metricPath} || exit 1
 fi
 
 function main() {
+
+ip=$(hostname -I | awk '{print $1}')
+
 # 收集指标
 winningPost_run_time=$(grep 'GenerateWinningPoSt took' /var/log/containers/winning-post-miner-32g-mainnet-poster*.log | tail -1 | awk -F 'took ' '{print $NF}' | awk -F 's' '{print $1}')
 winningPost_run_timestamp_tmp=$(grep 'GenerateWinningPoSt took' /var/log/containers/winning-post-miner-32g-mainnet-poster*.log | tail -1 | awk -F 'time' '{print $NF}' | cut -c 4- | rev | cut -c 3- | rev)
@@ -29,10 +32,10 @@ fi
 cat > ${metricPath}/.winningPost-metric << EOF
 # HELP winningPost_run_time get winningPost run time
 # TYPE winningPost_run_time gauge
-winningPost_run_time{hostname="$(hostname)"} ${winningPost_run_time}
+winningPost_run_time{ip="${ip}", hostname="$(hostname)"} ${winningPost_run_time}
 # HELP winningPost_run_timestamp get winningPost run timestamp
 # TYPE winningPost_run_timestamp gauge
-winningPost_run_timestamp{hostname="$(hostname)"} ${winningPost_run_timestamp}
+winningPost_run_timestamp{ip="${ip}", hostname="$(hostname)"} ${winningPost_run_timestamp}
 EOF
 
 mv ${metricPath}/.winningPost-metric ${metricPath}/winningPost-metric.prom
@@ -45,7 +48,7 @@ if [ "$?" != "0" ]
 then
 cp -f ${metricPath}/winningPost_history-metric.prom ${metricPath}/.winningPost_history-metric
 cat >> ${metricPath}/.winningPost_history-metric << EOF
-winningPost_history{hostname="$(hostname)", date="${winningPost_run_date}"} ${winningPost_run_time}
+winningPost_history{ip="${ip}", hostname="$(hostname)", date="${winningPost_run_date}"} ${winningPost_run_time}
 EOF
 fi
 
@@ -54,7 +57,7 @@ else
 cat > ${metricPath}/.winningPost_history-metric << EOF
 # HELP winningPost_history get winningPost history info
 # TYPE winningPost_history gauge
-winningPost_history{hostname="$(hostname)", date="${winningPost_run_date}"} ${winningPost_run_time}
+winningPost_history{ip="${ip}", hostname="$(hostname)", date="${winningPost_run_date}"} ${winningPost_run_time}
 EOF
 
 fi
