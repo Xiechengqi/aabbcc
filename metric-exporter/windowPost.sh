@@ -63,6 +63,7 @@ cp -f ${metricPath}/windowPost_history-metric.prom ${metricPath}/.windowPost_his
 cat >> ${metricPath}/.windowPost_history-metric << EOF
 windowPost_history{ip="${ip}", hostname="$(hostname)", date="${windowPost_run_date}"} ${windowPost_run_time}
 EOF
+mv ${metricPath}/.windowPost_history-metric ${metricPath}/windowPost_history-metric.prom
 fi
 
 else
@@ -72,10 +73,9 @@ cat > ${metricPath}/.windowPost_history-metric << EOF
 # TYPE windowPost_history gauge
 windowPost_history{ip="${ip}", hostname="$(hostname)", date="${windowPost_run_date}"} ${windowPost_run_time}
 EOF
+mv ${metricPath}/.windowPost_history-metric ${metricPath}/windowPost_history-metric.prom
 
 fi
-
-mv ${metricPath}/.windowPost_history-metric ${metricPath}/windowPost_history-metric.prom
 
 }
 
