@@ -34,12 +34,9 @@ cat > ${metricPath}/.miner-metric << EOF
 # HELP miner_p1_fail_num get sealPreCommit1Failed number
 # TYPE miner_p1_fail_num gauge
 miner_p1_fail_num{ip="${ip}", hostname="$(hostname)"} ${miner_p1_fail_num}
-# HELP lotus_move_storage_sector_id get lotus move storage sector id 
-# TYPE lotus_move_storage_sector_id gauge
-lotus_move_storage_sector_id{ip="${ip}", hostname="$(hostname)"} ${lotus_move_storage_sector_id}
 # HELP lotus_move_storage_spend_time get lotus move storage spend time
 # TYPE lotus_move_storage_spend_time gauge
-lotus_move_storage_spend_time{ip="${ip}", hostname="$(hostname)"} ${lotus_move_storage_spend_time}
+lotus_move_storage_spend_time{ip="${ip}", hostname="$(hostname)", sector_id="${lotus_move_storage_sector_id}"} ${lotus_move_storage_spend_time}
 EOF
 
 mv ${metricPath}/.miner-metric ${metricPath}/miner-metric.prom
