@@ -63,10 +63,10 @@ grep -i 'sealPreCommit1Failed' /var/log/containers/seal-miner-32g-mainnet-* | gr
 # check sector, if in ~/.lotusminer/unsealed or no finalize in log, skip it
 for sectorId in `cat /tmp/$$_p1_fail_sector_id_list`
 do
-! docker exec -it ${containerName} ls ~/.lotusminer/unsealed | grep "${sectorId} " &> /dev/null && docker exec -it ${containerName} lotus-miner sectors status --log ${sectorId} | grep -i 'finalize' &> /dev/null
+! docker exec ${containerName} ls ~/.lotusminer/unsealed | grep "${sectorId} " &> /dev/null && docker exec ${containerName} lotus-miner sectors status --log ${sectorId} | grep -i 'finalize' &> /dev/null
 if [ "$?" = "0" ]
 then
-expire_date=`docker exec -it ${containerName} lotus-miner sectors status --log ${sectorId} | grep -i 'finalize' | tail -1 | awk -F '+' '{print $1}' | awk -F '.' '{print $NF}'`
+expire_date=`docker exec ${containerName} lotus-miner sectors status --log ${sectorId} | grep -i 'finalize' | tail -1 | awk -F '+' '{print $1}' | awk -F '.' '{print $NF}'`
 expired_timestamp=`date -d "${expire_date}" +%s`
 now_timestamp=`date +%s`
 expired_time=`echo "(${now_timestamp} - ${expired_timestamp}) / 3600" | bc`
