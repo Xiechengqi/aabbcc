@@ -42,7 +42,7 @@ miner_p1_fail_num{ip="${ip}", hostname="${hostName}"} ${miner_p1_fail_num}
 lotus_move_storage_spend_time{ip="${ip}", hostname="${hostName}", sector_id="${lotus_move_storage_sector_id}"} ${lotus_move_storage_spend_time}
 EOF
 
-if [ "$nowMin" = "14" ] && [ "$nowMin" = "10" ]
+if [ "$nowHour" = "14" ] && [ "$nowMin" = "10" ]
 then
 
 # seal miner container
