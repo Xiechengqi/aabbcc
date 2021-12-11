@@ -44,7 +44,8 @@ EOF
 
 mv ${metricPath}/.miner-metric ${metricPath}/miner-metric.prom
 
-if [ "$nowHour" = "15" ] && [ "$nowMin" = "13" ]
+# if [ "$nowHour" = "15" ] && [ "$nowMin" = "13" ]
+if [ "$nowHour" = "15" ]
 then
 
 # seal miner container
