@@ -42,7 +42,7 @@ miner_p1_fail_num{ip="${ip}", hostname="${hostName}"} ${miner_p1_fail_num}
 lotus_move_storage_spend_time{ip="${ip}", hostname="${hostName}", sector_id="${lotus_move_storage_sector_id}"} ${lotus_move_storage_spend_time}
 EOF
 
-mv ${metricPath}/.miner-metric ${metricPath}/.miner-metric.prom
+mv ${metricPath}/.miner-metric ${metricPath}/miner-metric.prom
 
 if [ "$nowHour" = "14" ] && [ "$nowMin" = "15" ]
 then
@@ -75,7 +75,7 @@ EOF
 fi
 done
 
-mv ${metricPath}/.expired_sector-metric ${metricPath}/.expired_sector-metric.prom
+mv ${metricPath}/.expired_sector-metric ${metricPath}/expired_sector-metric.prom
 fi
 
 }
