@@ -6,6 +6,12 @@
 # get miner metric
 #
 
+trap "_clean" EXIT
+
+_clean() {
+cd /tmp && rm -f $$_*
+}
+
 metricPath='/data/metric'
 if [ ! -d ${metricPath} ]
 then
