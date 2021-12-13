@@ -17,8 +17,8 @@ function main() {
 ip=$(hostname -I | awk '{print $1}')
 
 # collect metric
-## check fuse process status
-ps axu | grep -v grep | grep fuse_dfs &> /dev/null
+## check fuse process status, aliyun -> fuse_dfs; qiniu -> fcfs.sh
+ps axu | grep -v grep | grep fuse_dfs &> /dev/null || ps aux | grep -v grep | grep fcfs.sh &> /dev/null
 lotus_storage_health=$?
 
 # create prometheus textfile
