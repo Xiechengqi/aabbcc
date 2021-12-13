@@ -21,12 +21,12 @@ nowMin=`date +%M`
 
 # 收集指标
 # sealPreCommit1Failed number metric
-miner_p1_fail_num=$(grep -i 'sealPreCommit1Failed' /var/log/containers/seal-miner-32g-mainnet-*.log | grep 'acquire' | awk -F '{' '{print $NF}' | awk -F '}' '{print $1}' | awk '{print $NF}' | sort | uniq | wc -l)
+miner_p1_fail_num=$(grep -i 'sealPreCommit1Failed' /var/log/containers/seal-miner-32g-*.log | grep 'acquire' | awk -F '{' '{print $NF}' | awk -F '}' '{print $1}' | awk '{print $NF}' | sort | uniq | wc -l)
 
 ## log metric
-lotus_move_storage_sector_id=`grep 'MoveStorage done' /var/log/containers/seal-miner-32g-mainnet-*.log | grep -E '[0-9]+m[0-9]' | tail -1 | awk -F 'sector ID: ' '{print $NF}' | awk -F '.' '{print $1}'`
+lotus_move_storage_sector_id=`grep 'MoveStorage done' /var/log/containers/seal-miner-32g-*.log | grep -E '[0-9]+m[0-9]' | tail -1 | awk -F 'sector ID: ' '{print $NF}' | awk -F '.' '{print $1}'`
 [ ".${lotus_move_storage_sector_id}" = "." ] && lotus_move_storage_sector_id="0"
-lotus_move_storage_spend_time_tmp=`grep 'MoveStorage done' /var/log/containers/seal-miner-32g-mainnet-*.log | grep -E '[0-9]+m[0-9]' | tail -1 | awk -F 'elapse ' '{print $NF}' | awk -F '.' '{print $1}'`
+lotus_move_storage_spend_time_tmp=`grep 'MoveStorage done' /var/log/containers/seal-miner-32g-*.log | grep -E '[0-9]+m[0-9]' | tail -1 | awk -F 'elapse ' '{print $NF}' | awk -F '.' '{print $1}'`
 [ ".${lotus_move_storage_spend_time_tmp}" = "." ] && lotus_move_storage_spend_time="0"
 lotus_move_storage_spend_time_minute=`echo ${lotus_move_storage_spend_time_tmp} | awk -F 'm' '{print $1}'`
 lotus_move_storage_spend_time_second=`echo ${lotus_move_storage_spend_time_tmp} | awk -F 'm' '{print $NF}'`
@@ -57,7 +57,7 @@ cat > ${metricPath}/.expired_sector-metric << EOF
 EOF
 
 # collect p1 fail sector id from log
-grep -i 'sealPreCommit1Failed' /var/log/containers/seal-miner-32g-mainnet-* | grep 'acquire' | awk -F '{' '{print $NF}' | awk -F '}' '{print $1}' | awk '{print $NF}' | sort | uniq > /tmp/$$_p1_fail_sector_id_list
+grep -i 'sealPreCommit1Failed' /var/log/containers/seal-miner-32g-* | grep 'acquire' | awk -F '{' '{print $NF}' | awk -F '}' '{print $1}' | awk '{print $NF}' | sort | uniq > /tmp/$$_p1_fail_sector_id_list
 
 # check sector, if in ~/.lotusminer/unsealed or no finalize in log, skip it
 for sectorId in `cat /tmp/$$_p1_fail_sector_id_list`
