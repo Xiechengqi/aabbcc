@@ -7,11 +7,8 @@
   EnableMarkets = false
 [Dealmaking]
   [Dealmaking.RetrievalPricing]
-    #Strategy = "default"
     [Dealmaking.RetrievalPricing.Default]
-      #VerifiedDealsFreeTransfer = true
     [Dealmaking.RetrievalPricing.External]
-      #Path = ""
 [Sealing]
   FinalizeEarly = true
   CollateralFromMinerBalance = true
@@ -26,14 +23,6 @@
   ResourceFiltering = "disabled"
 [Fees]
   [Fees.MaxPreCommitBatchGasFee]
-    # type: types.FIL
-    #Base = "0 FIL"
-    # type: types.FIL
-    #PerSector = "0.02 FIL"
   [Fees.MaxCommitBatchGasFee]
-    # type: types.FIL
-    #Base = "0 FIL"
-    # type: types.FIL
-    #PerSector = "0.03 FIL"
 [Addresses]
 [DAGStore]
