@@ -1,0 +1,39 @@
+[API]
+  ListenAddress = "/ip4/127.0.0.1/tcp/2345/http"
+[Backup]
+[Libp2p]
+[Pubsub]
+[Subsystems]
+  EnableMarkets = false
+[Dealmaking]
+  [Dealmaking.RetrievalPricing]
+    #Strategy = "default"
+    [Dealmaking.RetrievalPricing.Default]
+      #VerifiedDealsFreeTransfer = true
+    [Dealmaking.RetrievalPricing.External]
+      #Path = ""
+[Sealing]
+  FinalizeEarly = true
+  CollateralFromMinerBalance = true
+  BatchPreCommits = false
+  AggregateCommits = false
+[Storage]
+  AllowAddPiece = false
+  AllowPreCommit1 = false
+  AllowPreCommit2 = false
+  AllowCommit = false
+  AllowUnseal = false
+  ResourceFiltering = "disabled"
+[Fees]
+  [Fees.MaxPreCommitBatchGasFee]
+    # type: types.FIL
+    #Base = "0 FIL"
+    # type: types.FIL
+    #PerSector = "0.02 FIL"
+  [Fees.MaxCommitBatchGasFee]
+    # type: types.FIL
+    #Base = "0 FIL"
+    # type: types.FIL
+    #PerSector = "0.03 FIL"
+[Addresses]
+[DAGStore]
