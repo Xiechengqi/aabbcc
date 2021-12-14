@@ -1,0 +1,29 @@
+[API]
+  ListenAddress = "/ip4/0.0.0.0/tcp/2345/http"
+[Backup]
+[Libp2p]
+[Pubsub]
+[Subsystems]
+  EnableMarkets = false
+[Dealmaking]
+  [Dealmaking.RetrievalPricing]
+    [Dealmaking.RetrievalPricing.Default]
+    [Dealmaking.RetrievalPricing.External]
+[Sealing]
+  CommittedCapacitySectorLifetime = "8640h0m0s"
+  FinalizeEarly = true
+  CollateralFromMinerBalance = true
+  BatchPreCommits = false
+  MaxPreCommitBatch = 8
+  AggregateCommits = false
+  MinCommitBatch = 128
+  MaxCommitBatch = 128
+  BatchPreCommitAboveBaseFee = "0.00000000002 FIL"
+  AggregateAboveBaseFee = "0.00000000002 FIL"
+[Storage]
+  ResourceFiltering = "disabled"
+[Fees]
+  [Fees.MaxPreCommitBatchGasFee]
+  [Fees.MaxCommitBatchGasFee]
+[Addresses]
+[DAGStore]
