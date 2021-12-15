@@ -1,0 +1,181 @@
+{
+    "mount": {
+        "debug": false,
+
+        "mount_point": "/mnt/fcfs/mainnet/f@minerId/storage",
+
+        "max_write": 1048576,
+        "max_readahead": 1, # 关闭
+        "max_background": 36,
+
+        "allow_other": true,
+        "default_permissions": true
+    },
+
+    "kodo": {
+        # 集群接入信息，请联系技术支持
+        "prefix":"",
+        "uc_hosts":["http://10.7.60.1:10221", "http://10.7.60.2:10221", "http://10.7.60.3:10221", "http://10.7.60.4:10221", "http://10.7.60.5:10221"],
+        "bucket":"f@minerId",
+        "ak":"@ak",
+        "sk":"@sk",
+        "part":447,
+        "up_concurrency":4
+    },
+
+    "fscfg": {
+        "uid": 0,
+        "gid": 0,
+
+        "rename_suffix": ".tmp", # 开启 suffix-rename 支持
+
+        "dir_mode": "777",
+        "file_mode": "666"
+    },
+
+    "fstree": [
+        {
+            "pattern": "sectorstore.json",
+            "type": "file",
+            "fopt": {
+                "volatile": true
+            }
+        },
+        {
+            "pattern": "sealed",
+            "type": "dir",
+            "children": [
+                {
+                    "pattern": "fetching",
+                    "type": "ccdir"
+                },
+                {
+                    "pattern": "s-*", # 支持通配
+                    "type": "file",
+                    "fopt": {
+                        "read_unit": 16384, # 页倍数
+                        "readonly": true,
+                        "asylum_time": "2m",
+                        "guardian": "{{ . | replace `sealed` `cache` | printf `%s/t_aux` }}"
+                    }
+                }
+            ]
+        },
+        {
+            "pattern": "unsealed",
+            "type": "dir",
+            "children": [
+                {
+                    "pattern": "fetching",
+                    "type": "ccdir"
+                },
+                {
+                    "pattern": "s-*",
+                    "type": "file",
+                    "fopt": {
+                        "readonly": true,
+                        "asylum_time": "2m",
+                        "guardian": "{{ . | replace `sealed` `cache` | printf `%s/t_aux` }}"
+                    }
+                }
+            ]
+        },
+        {
+            "pattern": "cache",
+            "type": "dir",
+            "children": [
+                {
+                    "pattern": "fetching",
+                    "type": "ccdir"
+                },
+                {
+                    "pattern": "s-*",
+                    "type": "dir",
+                    "deputy": "t_aux",
+                    "deputy_fopt": {
+                        "readonly": true
+                    },
+                    "children": [
+                        {
+                            "pattern": "*_aux",
+                            "type": "file",
+                            "fopt": {
+                                "readonly": true
+                            }
+                        },
+                        {
+                            "pattern": "*-r-last*.dat",
+                            "type": "file",
+                            "fopt": {
+                                "readonly": true
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+             "pattern": "tmp",
+             "type": "dir",
+             "children": [
+                 {
+                     "pattern": "s-*.sealed",
+                     "type": "file",
+                     "fopt": {
+                         "readonly": false
+                     }
+                 },
+                 {
+                     "pattern": "s-*.unsealed",
+                     "type": "file",
+                     "fopt": {
+                         "readonly": false
+                     }
+                 },
+                 {
+                     "pattern": "s-*.cache",
+                     "type": "dir",
+                     "fopt": {
+                         "readonly": false
+                     },
+                     "children": [
+                        {
+                            "pattern": "*_aux",
+                            "type": "file",
+                            "fopt": {
+                                "readonly": false
+                            }
+                        },
+                        {
+                            "pattern": "*-r-last*.dat",
+                            "type": "file",
+                            "fopt": {
+                                "readonly": false
+                            }
+                        }
+                    ]
+                 }
+             ]
+        }
+    ],
+
+    "sync_filter": {
+        # 路径支持[]展开，以提高sync并发
+        # 当前规则
+        #   [digit]  数字
+        #   [alpha]  字母
+        #   [alnum]  字母+数字
+        #
+        # 取消下列行的注释，并修改0123456为实际矿工号(数字部分)
+        #
+        "keys": [
+            "sectorstore.json"
+        ],
+        "prefixs": [
+            "sealed/s-t@minerId-[digit]",
+            "unsealed/s-t@minerId-[digit]",
+            "cache/s-t@minerId-[digit]/",
+            "cache/s-t@minerId-[digit][digit]"
+        ]
+    }
+}
