@@ -38,6 +38,10 @@ lotus_move_storage_spend_time_minute=`echo ${lotus_move_storage_spend_time_tmp} 
 lotus_move_storage_spend_time_second=`echo ${lotus_move_storage_spend_time_tmp} | awk -F 'm' '{print $NF}'`
 lotus_move_storage_spend_time=`echo "${lotus_move_storage_spend_time_minute}*60 + ${lotus_move_storage_spend_time_second}" | bc`
 
+## check redis
+lotus_redis_status="0"
+grep 'dial tcp'  /var/log/containers/seal-miner-32g-*.log &> /dev/null && lotus_redis_status="1"
+
 # 构建 prometheus textfile
 cat > ${metricPath}/.miner-metric << EOF
 # HELP miner_p1_fail_num get sealPreCommit1Failed number
@@ -46,6 +50,9 @@ miner_p1_fail_num{ip="${ip}", hostname="${hostName}"} ${miner_p1_fail_num}
 # HELP lotus_move_storage_spend_time get lotus move storage spend time
 # TYPE lotus_move_storage_spend_time gauge
 lotus_move_storage_spend_time{ip="${ip}", hostname="${hostName}", sector_id="${lotus_move_storage_sector_id}"} ${lotus_move_storage_spend_time}
+# HELP lotus_redis_status get lotus redis status
+# TYPE lotus_redis_status
+lotus_redis_status{ip="${ip}", hostname="${hostName}"} ${lotus_redis_status}
 EOF
 
 mv ${metricPath}/.miner-metric ${metricPath}/miner-metric.prom
