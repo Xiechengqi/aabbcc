@@ -43,6 +43,7 @@ lotus_redis_status="0"
 grep 'dial tcp'  /var/log/containers/seal-miner-32g-*.log &> /dev/null && lotus_redis_status="1"
 
 # 构建 prometheus textfile
+[ ".${lotus_move_storage_spend_time}" = "." ] && lotus_move_storage_spend_time="0"
 cat > ${metricPath}/.miner-metric << EOF
 # HELP miner_p1_fail_num get sealPreCommit1Failed number
 # TYPE miner_p1_fail_num gauge
