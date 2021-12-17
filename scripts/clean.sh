@@ -15,7 +15,7 @@ then
 sectorId=`echo $sealName | awk -F '-' '{print $NF}'`
 [ ".${sectorId}" = "." ] && continue
 [ "${sectorId}" -gt "778200" ] && continue
-! lotus-miner sector status ${sectorId} | grep -i status | grep -i proving && continue
+! lotus-miner sectors status ${sectorId} | grep -i status | grep -i proving &> /dev/null && continue
 echo -n "remove /root/.lotusminer/sealed/$sealName ... "
 rm -rf ${sealName} && echo 'ok' || echo 'fail'
 fi
@@ -30,7 +30,7 @@ then
 sectorId=`echo $cacheName | awk -F '-' '{print $NF}'`
 [ ".${sectorId}" = "." ] && continue
 [ "${sectorId}" -gt "778200" ] && continue
-! lotus-miner sector status ${sectorId} | grep -i status | grep -i proving && continue
+! lotus-miner sectors status ${sectorId} | grep -i status | grep -i proving &> /dev/null && continue
 echo -n "remove /root/.lotusminer/cache/$cacheName ... "
 rm -rf ${cacheName} && echo 'ok' || echo 'fail'
 fi
