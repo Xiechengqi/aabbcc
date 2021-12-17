@@ -13,7 +13,8 @@ do
 if ls /mnt/sealed/mainnet/storage/f01479781/1/sealed/${sealName} &> /dev/null
 then
 sectorId=`echo $sealName | awk -F '-' '{print $NF}'`
-! lotus-miner sectors status ${sectorId} | grep -i status | grep -i proving &> /dev/null && echo "check /root/.lotusminer/sealed/$sealName ... fail"
+lotus-miner sectors status ${sectorId} | grep -i status | grep -i proving &> /dev/null && continue
+echo "check /root/.lotusminer/sealed/$sealName ... fail"
 fi
 done
 
@@ -24,6 +25,7 @@ do
 if ls /mnt/sealed/mainnet/storage/f01479781/1/cache/${sealName} &> /dev/null
 then
 sectorId=`echo $sealName | awk -F '-' '{print $NF}'`
-! lotus-miner sectors status ${sectorId} | grep -i status | grep -i proving &> /dev/null && echo "check /root/.lotusminer/cache/$sealName ... fail"
+lotus-miner sectors status ${sectorId} | grep -i status | grep -i proving &> /dev/null && continue
+echo "check /root/.lotusminer/cache/$sealName ... fail"
 fi
 done
