@@ -9,4 +9,6 @@
 
 minerId=$1
 [ ".${minerId}" = "." ] && echo "Usage: curl -SsL https://raw.githubusercontent.com/Xiechengqi/aabbcc/master/scripts/get_lucky_value.sh | bash -s [minerId]"
-printf %.2f $(echo "$(curl -SsL https://filfox.info/api/v1/address/${minerId}/mining-stats?duration=24h | jq -r .luckyValue) * 100" | bc) && echo "%"
+lucky_value=`printf %.2f $(echo "$(curl -SsL https://filfox.info/api/v1/address/${minerId}/mining-stats?duration=24h | jq -r .luckyValue) * 100" | bc)`
+[ ".${lucky_value}" = "." ] && lucky_value="-1"
+echo "${lucky_value}%"
