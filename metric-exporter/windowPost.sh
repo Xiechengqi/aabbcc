@@ -2,7 +2,7 @@
 
 #
 # xiechengqi
-# 2021/12/03
+# 2021/12/21
 # get WindowPoST metric
 #
 
@@ -15,11 +15,14 @@ fi
 function main() {
 
 ip="$(hostname -I | awk '{print $1}')"
+windowPost_log_file_path=`ls -t /var/log/containers/window-post-miner-* | head -1`
+[ ".${windowPost_log_file_path}" = "." ] && echo "Not found window post file" && exit 1
 
 # 收集指标
 # 最新一次 windowPoST 运行时间
-windowPost_run_time=$(grep 'computing window post' /var/log/containers/window-post-miner-32g-mainnet-poster*.log | tail -1 | awk -F 'elapsed' '{print $NF}' | awk -F '}' '{print $1}' | awk '{print $NF}')
-windowPost_run_timestamp_tmp=$(grep 'computing window post' /var/log/containers/window-post-miner-32g-mainnet-poster*.log | tail -1 | awk -F '"log":"' '{print $NF}' | awk -F '\' '{print $1}')
+windowPost_run_time=$(grep 'computing window post' ${windowPost_log_file_path} | tail -1 | awk -F 'elapsed' '{print $NF}' | awk -F '}' '{print $1}' | awk '{print $NF}')
+[ ".${windowPost_run_time}" = "." ] && windowPost_run_time="0"
+windowPost_run_timestamp_tmp=$(grep 'computing window post' ${windowPost_log_file_path} | tail -1 | awk -F '"log":"' '{print $NF}' | awk -F '\' '{print $1}')
 if [ "${windowPost_run_timestamp_tmp}" = "" ]
 then
 windowPost_run_timestamp="0"
@@ -30,7 +33,7 @@ windowPost_run_date=$(date '+%Y-%m-%d %H:%M:%S' -d @${windowPost_run_timestamp})
 fi
 
 # 最新一次 windowPoST 运行失败
-windowPost_fail_timestamp_tmp=$(grep 'running window post failed' /var/log/containers/window-post-miner-32g-mainnet-poster*.log | tail -1 | awk -F '"log":"' '{print $NF}' | awk -F '\' '{print $1}')
+windowPost_fail_timestamp_tmp=$(grep 'running window post failed' ${windowPost_log_file_path} | tail -1 | awk -F '"log":"' '{print $NF}' | awk -F '\' '{print $1}')
 if [ "${windowPost_fail_timestamp_tmp}" = "" ]
 then
 windowPost_fail_timestamp="0"
