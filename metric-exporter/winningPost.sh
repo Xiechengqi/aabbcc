@@ -24,8 +24,8 @@ then
 winningPost_run_timestamp="0"
 winningPost_run_date="0-0-0 00:00:00"
 else
-winningPost_run_timestamp=$(date -d ${winningPost_run_timestamp_tmp} +%s)
-winningPost_run_date=$(date '+%Y-%m-%d %H:%M:%S' -d @${winningPost_run_timestamp})
+winningPost_run_timestamp=$(TZ=UTC-8 date -d ${winningPost_run_timestamp_tmp} +%s)
+winningPost_run_date=$(TZ=UTC-8 date '+%Y-%m-%d %H:%M:%S' -d @${winningPost_run_timestamp})
 fi
 
 # 构建 prometheus textfile
