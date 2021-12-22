@@ -28,8 +28,8 @@ then
 windowPost_run_timestamp="0"
 windowPost_run_date="0-0-0 00:00:00"
 else
-windowPost_run_timestamp=$(date -d ${windowPost_run_timestamp_tmp} +%s)
-windowPost_run_date=$(date '+%Y-%m-%d %H:%M:%S' -d @${windowPost_run_timestamp})
+windowPost_run_timestamp=$(TZ=UTC-8 date -d ${windowPost_run_timestamp_tmp} +%s)
+windowPost_run_date=$(TZ=UTC-8 date '+%Y-%m-%d %H:%M:%S' -d @${windowPost_run_timestamp})
 fi
 
 # 最新一次 windowPoST 运行失败
