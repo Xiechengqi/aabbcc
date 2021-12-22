@@ -73,12 +73,17 @@ EOF
 # collect p1 fail sector id from log
 grep -i 'sealPreCommit1Failed' /var/log/containers/seal-miner-32g-* | grep 'acquire' | awk -F '{' '{print $NF}' | awk -F '}' '{print $1}' | awk '{print $NF}' | sort | uniq > /tmp/$$_p1_fail_sector_id_list
 
-# check sector, if in ~/.lotusminer/unsealed or no finalize in log, skip it
 for sectorId in `cat /tmp/$$_p1_fail_sector_id_list`
 do
-! docker exec ${containerName} ls ~/.lotusminer/unsealed | grep "${sectorId} " &> /dev/null && docker exec ${containerName} lotus-miner sectors status --log ${sectorId} | grep -i 'finalize' &> /dev/null
-if [ "$?" = "0" ]
-then
+
+# check sector
+# if sector in ~/.lotusminer/unsealed, skip this loop
+docker exec ${containerName} ls ~/.lotusminer/unsealed | grep "${sectorId} " &> /dev/null && continue
+# if sector status is proving, skip this loop
+docker exec ${containerName} lotus-miner sectors status "${sectorId}" | grep -i 'status' | grep -i 'proving' &> /dev/null && continue
+# if sector log does not contain finalize, skip this loop
+! docker exec ${containerName} lotus-miner sectors status --log ${sectorId} | grep -i 'finalize' &> /dev/null && continue
+
 expire_date=`docker exec ${containerName} lotus-miner sectors status --log ${sectorId} | grep -i 'finalize' | tail -1 | awk -F '+' '{print $1}' | awk -F '.' '{print $NF}'`
 expired_timestamp=`date -d "${expire_date}" +%s`
 now_timestamp=`date +%s`
@@ -86,7 +91,7 @@ expired_time=`echo "(${now_timestamp} - ${expired_timestamp}) / 3600" | bc`
 cat >> ${metricPath}/.expired_sector-metric << EOF
 lotus_expired_sector{ip="${ip}", hostname="${hostName}", expired_time="${expired_time}"} ${sectorId}
 EOF
-fi
+
 done
 
 mv ${metricPath}/.expired_sector-metric ${metricPath}/expired_sector-metric.prom
