@@ -40,7 +40,7 @@ lotus_move_storage_spend_time=`echo "${lotus_move_storage_spend_time_minute}*60 
 
 ## check redis
 lotus_redis_status="0"
-grep 'dial tcp'  /var/log/containers/seal-miner-32g-*.log &> /dev/null && lotus_redis_status="1"
+grep 'dial tcp'  /var/log/containers/seal-miner-32g-*.log | egrep -v '3456|3457' &> /dev/null && lotus_redis_status="1"
 
 # 构建 prometheus textfile
 [ ".${lotus_move_storage_spend_time}" = "." ] && lotus_move_storage_spend_time="0"
