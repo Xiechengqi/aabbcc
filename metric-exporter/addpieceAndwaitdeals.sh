@@ -67,6 +67,11 @@ cat >> /data/metric/.miner_waitdeals_metric << EOF
 miner_sector_waitdeals{sector_id="${sector_id}"} 1
 EOF
 done < /tmp/$$_WaitDeals
+
+mv /data/metric/.miner_normal_addpiece_metric /data/metric/miner_normal_addpiece_metric.prom
+mv /data/metric/.miner_hang_addpiece_metric /data/metric/miner_hang_addpiece_metric.prom
+mv /data/metric/.miner_waitdeals_metric /data/metric/miner_waitdeals_metric.prom
+
 }
 
 main $@
