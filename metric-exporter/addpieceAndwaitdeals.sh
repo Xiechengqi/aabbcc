@@ -17,7 +17,7 @@ main() {
 [ `docker ps | grep -v 'pause' | grep 'seal-miner' | wc -l` -gt "1" ]  && exit 1
 containerName=`docker ps | grep -v 'pause' | grep 'seal-miner' | awk '{print $NF}'`
 [ ".${containerName}" = "." ] && exit 1
-! docker exec -it ${containerName} which lotus-miner &> /dev/null && exit 1
+docker exec -it ${containerName} which lotus-miner &> /dev/null || exit 1
 docker exec -it ${containerName} lotus-miner sectors list --states=AddPiece | grep AddPiece > /tmp/$$_states_AddPiece
 cat > /data/metric/.miner_normal_addpiece_metric << EOF
 # HELP miner_sector_addpiece_spend_time get miner sector addpiece spend time
