@@ -42,6 +42,10 @@ lotus_move_storage_spend_time=`echo "${lotus_move_storage_spend_time_minute}*60 
 lotus_redis_status="0"
 grep 'dial tcp'  /var/log/containers/seal-miner-32g-*.log | egrep -v '3456|3457' &> /dev/null && lotus_redis_status="1"
 
+## check websocket
+lotus_websocket_status="0"
+grep 'websocket connection closed' /var/log/containers/seal-miner-32g-*.log &> /dev/null && lotus_websocket_status="1"
+
 # 构建 prometheus textfile
 [ ".${lotus_move_storage_spend_time}" = "." ] && lotus_move_storage_spend_time="0"
 cat > ${metricPath}/.miner-metric << EOF
@@ -54,6 +58,9 @@ lotus_move_storage_spend_time{ip="${ip}", hostname="${hostName}", sector_id="${l
 # HELP lotus_redis_status get lotus redis status
 # TYPE lotus_redis_status
 lotus_redis_status{ip="${ip}", hostname="${hostName}"} ${lotus_redis_status}
+# HELP lotus_websocket_status get lotus websocket status
+# TYPE lotus_websocket_status
+lotus_websocket_status{ip="${ip}", hostname="${hostName}"} ${lotus_websocket_status}
 EOF
 
 mv ${metricPath}/.miner-metric ${metricPath}/miner-metric.prom
