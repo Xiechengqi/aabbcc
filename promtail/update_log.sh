@@ -14,3 +14,8 @@ for log_regex in ${log_regex_array[*]}
 do
 ls ${log_regex} &> /dev/null && ln -fs ${log_regex} ${logPath} || continue
 done
+
+for file in `ls ${logPath}`
+do
+ls `readlink ${logPath}/${file}` &> /dev/null || rm -f ${logPath}/${file}
+done
