@@ -2,7 +2,7 @@
 
 #
 # xiechengqi
-# 2021/12/11
+# 2022/01/14
 # get miner metric
 #
 
@@ -27,12 +27,12 @@ nowMin=`date +%M`
 
 # 收集指标
 # sealPreCommit1Failed number metric
-miner_p1_fail_num=$(grep -i 'sealPreCommit1Failed' /var/log/containers/seal-miner-32g-*.log | grep 'acquire' | awk -F '{' '{print $NF}' | awk -F '}' '{print $1}' | awk '{print $NF}' | sort | uniq | wc -l)
+miner_p1_fail_num=$(grep -i 'sealPreCommit1Failed' /var/log/containers/seal-miner-*.log | grep 'acquire' | awk -F '{' '{print $NF}' | awk -F '}' '{print $1}' | awk '{print $NF}' | sort | uniq | wc -l)
 
 ## log metric
-lotus_move_storage_sector_id=`grep 'MoveStorage done' /var/log/containers/seal-miner-32g-*.log | grep -E '[0-9]+m[0-9]' | tail -1 | awk -F 'sector ID: ' '{print $NF}' | awk -F '.' '{print $1}'`
+lotus_move_storage_sector_id=`grep 'MoveStorage done' /var/log/containers/seal-miner-*.log | grep -E '[0-9]+m[0-9]' | tail -1 | awk -F 'sector ID: ' '{print $NF}' | awk -F '.' '{print $1}'`
 [ ".${lotus_move_storage_sector_id}" = "." ] && lotus_move_storage_sector_id="0"
-lotus_move_storage_spend_time_tmp=`grep 'MoveStorage done' /var/log/containers/seal-miner-32g-*.log | grep -E '[0-9]+m[0-9]' | tail -1 | awk -F 'elapse ' '{print $NF}' | awk -F '.' '{print $1}'`
+lotus_move_storage_spend_time_tmp=`grep 'MoveStorage done' /var/log/containers/seal-miner-*.log | grep -E '[0-9]+m[0-9]' | tail -1 | awk -F 'elapse ' '{print $NF}' | awk -F '.' '{print $1}'`
 [ ".${lotus_move_storage_spend_time_tmp}" = "." ] && lotus_move_storage_spend_time="0"
 lotus_move_storage_spend_time_minute=`echo ${lotus_move_storage_spend_time_tmp} | awk -F 'm' '{print $1}'`
 lotus_move_storage_spend_time_second=`echo ${lotus_move_storage_spend_time_tmp} | awk -F 'm' '{print $NF}'`
@@ -40,11 +40,11 @@ lotus_move_storage_spend_time=`echo "${lotus_move_storage_spend_time_minute}*60 
 
 ## check redis
 lotus_redis_status="0"
-grep 'dial tcp'  /var/log/containers/seal-miner-32g-*.log | egrep -v '3456|3457' &> /dev/null && lotus_redis_status="1"
+grep 'dial tcp'  /var/log/containers/seal-miner-*.log | egrep -v '3456|3457' &> /dev/null && lotus_redis_status="1"
 
 ## check websocket
 lotus_websocket_status="0"
-grep 'websocket connection closed' /var/log/containers/seal-miner-32g-*.log &> /dev/null && lotus_websocket_status="1"
+grep 'websocket connection closed' /var/log/containers/seal-miner-*.log &> /dev/null && lotus_websocket_status="1"
 
 # 构建 prometheus textfile
 [ ".${lotus_move_storage_spend_time}" = "." ] && lotus_move_storage_spend_time="0"
@@ -78,7 +78,7 @@ cat > ${metricPath}/.expired_sector-metric << EOF
 EOF
 
 # collect p1 fail sector id from log
-grep -i 'sealPreCommit1Failed' /var/log/containers/seal-miner-32g-* | grep 'acquire' | awk -F '{' '{print $NF}' | awk -F '}' '{print $1}' | awk '{print $NF}' | sort | uniq > /tmp/$$_p1_fail_sector_id_list
+grep -i 'sealPreCommit1Failed' /var/log/containers/seal-miner-* | grep 'acquire' | awk -F '{' '{print $NF}' | awk -F '}' '{print $1}' | awk '{print $NF}' | sort | uniq > /tmp/$$_p1_fail_sector_id_list
 
 for sectorId in `cat /tmp/$$_p1_fail_sector_id_list`
 do
