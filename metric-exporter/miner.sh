@@ -2,7 +2,7 @@
 
 #
 # xiechengqi
-# 2022/01/14
+# 2022/01/15
 # get miner metric
 #
 
