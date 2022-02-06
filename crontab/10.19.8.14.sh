@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-lotus-metric
+lotus_metric
