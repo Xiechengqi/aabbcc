@@ -40,7 +40,13 @@ lotus_move_storage_spend_time=`echo "${lotus_move_storage_spend_time_minute}*60 
 
 ## check redis
 lotus_redis_status="0"
-grep 'dial tcp'  /var/log/containers/seal-miner-*.log | egrep -v '3456|3457' &> /dev/null && lotus_redis_status="1"
+lotus_redis_error_log_line_number="0"
+grep 'dial tcp'  /var/log/containers/seal-miner-*.log | egrep -v '3456|3457' &> /dev/null
+if [ "$?" = "0" ]
+then
+lotus_redis_error_log_line_number=$(grep 'dial tcp'  /var/log/containers/seal-miner-*.log | egrep -v '3456|3457' | wc -l)
+lotus_redis_status="1"
+fi
 
 ## check websocket
 lotus_websocket_status="0"
@@ -58,6 +64,9 @@ lotus_move_storage_spend_time{ip="${ip}", hostname="${hostName}", sector_id="${l
 # HELP lotus_redis_status get lotus redis status
 # TYPE lotus_redis_status
 lotus_redis_status{ip="${ip}", hostname="${hostName}"} ${lotus_redis_status}
+# HELP lotus_redis_status get lotus redis error log line number
+# TYPE lotus_redis_error_log_line_number
+lotus_redis_error_log_line_number{ip="${ip}", hostname="${hostName}"} ${lotus_redis_error_log_line_number}
 # HELP lotus_websocket_status get lotus websocket status
 # TYPE lotus_websocket_status
 lotus_websocket_status{ip="${ip}", hostname="${hostName}"} ${lotus_websocket_status}
