@@ -62,13 +62,13 @@ miner_p1_fail_num{ip="${ip}", hostname="${hostName}"} ${miner_p1_fail_num}
 # TYPE lotus_move_storage_spend_time gauge
 lotus_move_storage_spend_time{ip="${ip}", hostname="${hostName}", sector_id="${lotus_move_storage_sector_id}"} ${lotus_move_storage_spend_time}
 # HELP lotus_redis_status get lotus redis status
-# TYPE lotus_redis_status
+# TYPE lotus_redis_status gauge
 lotus_redis_status{ip="${ip}", hostname="${hostName}"} ${lotus_redis_status}
-# HELP lotus_redis_status get lotus redis error log line number
-# TYPE lotus_redis_error_log_line_number
+# HELP lotus_redis_error_log_line_number get lotus redis error log line number
+# TYPE lotus_redis_error_log_line_number gauge
 lotus_redis_error_log_line_number{ip="${ip}", hostname="${hostName}"} ${lotus_redis_error_log_line_number}
 # HELP lotus_websocket_status get lotus websocket status
-# TYPE lotus_websocket_status
+# TYPE lotus_websocket_status gauge
 lotus_websocket_status{ip="${ip}", hostname="${hostName}"} ${lotus_websocket_status}
 EOF
 
