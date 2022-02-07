@@ -4,7 +4,7 @@
 # 2022/02/07
 # xiechengqi
 # install monitor scripts
-# usage: curl | bash -s [minerId]
+# usage: curl -SsL https://raw.githubusercontent.com/Xiechengqi/aabbcc/master/scripts/get_monitor_scripts.sh | bash -s [minerId]
 #
 
 minerId=$1
