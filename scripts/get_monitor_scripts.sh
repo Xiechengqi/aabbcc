@@ -9,7 +9,7 @@
 
 minerId=$1
 
-cat > /usr/local/bin/lotus-exporter-farcaster.py << EOF
+cat > /usr/local/bin/fetch-data.sh << EOF
 /usr/local/bin/lotus-exporter-farcaster.py > /var/lib/prometheus/node-exporter/farcaster.prom.$$
 sed -i "s/${minerId}/$(hostname)/g" /var/lib/prometheus/node-exporter/farcaster.prom.$$
 mv /var/lib/prometheus/node-exporter/farcaster.prom.$$ /var/lib/prometheus/node-exporter/farcaster.prom
