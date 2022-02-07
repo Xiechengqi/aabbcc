@@ -16,3 +16,5 @@ mv /var/lib/prometheus/node-exporter/farcaster.prom.$$ /var/lib/prometheus/node-
 mv /var/lib/prometheus/node-exporter/farcaster.prom /data/
 mv /data/farcaster.prom /data/metrics
 EOF
+
+chmod +x /usr/local/bin/fetch-data.sh
