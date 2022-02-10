@@ -18,10 +18,10 @@ hostName="miner"$(echo "${suffixIp} + 100" | bc)
 # EXEC "mv /etc/apt/sources.list /etc/apt/sources.list.bak"
 # EXEC "curl -SsL https://raw.githubusercontent.com/Xiechengqi/aabbcc/master/scripts/sources.list -o /etc/apt/sources.list"
 
-if [ "${hostName}" != "$(hostname)" ]
-then
 EXEC "cd / && rm -rf tmp"
 EXEC "mkdir /tmp"
 EXEC "chmod 777 /tmp"
+EXEC "systemctl start systemd-hostnamed"
+EXEC "systemctl status systemd-hostnamed"
 EXEC "hostnamectl set-hostname ${hostName} && hostnamectl --pretty && hostnamectl --static && hostnamectl --transient"
-fi
+INFO "echo 127.0.0.1 ${hostName} >> /etc/hosts" && echo "127.0.0.1 ${hostName}" >> /etc/hosts
