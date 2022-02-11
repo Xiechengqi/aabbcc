@@ -66,9 +66,9 @@ VERSION = "v2.0.3"
 #
 # Example : MINER_URL = "http://127.0.0.1:2345/rpc/v0"
 MINER_URL = "http://127.0.0.1:2345/rpc/v0"
-MINER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBbGxvdyI6WyJyZWFkIiwid3JpdGUiLCJzaWduIiwiYWRtaW4iXX0.Td7FrlAU6BCTq4p_ld8kD4vlPGBiu_Te4o47QUbHFIg"
-DAEMON_URL = "http://10.19.8.7:11234/rpc/v0"
-DAEMON_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJBbGxvdyI6WyJyZWFkIiwid3JpdGUiLCJzaWduIiwiYWRtaW4iXX0.Bwpg67Wq-Y2NzapEuj6QJAUCfW23LcjzVLCSOFkta0A"
+MINER_TOKEN = "@MINER_TOKEN"
+DAEMON_URL = "http://@DAEMON_URL/rpc/v0"
+DAEMON_TOKEN = "@DAEMON_TOKEN"
 
 #################################################################################
 # DO NOT EDIT BELOW
