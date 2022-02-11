@@ -31,9 +31,10 @@ swapoff -a
 systemctl daemon-reload
 systemctl restart docker && systemctl restart kubelet
 apt install python3-toml python3-aiohttp python3-pip -y
-sed -i /preserve_hostname:/s#false#true# /etc/cloud/cloud.cfg
+# sed -i /preserve_hostname:/s#false#true# /etc/cloud/cloud.cfg
 
 uuid=`mdadm --detail --scan | grep -o "UUID=[^ ]*" | cut -d= -f2`
+echo "/dev/disk/by-id/md-uuid-$uuid /scratch ext4 defaults 0 0"
 echo "/dev/disk/by-id/md-uuid-$uuid /scratch ext4 defaults 0 0" >> /etc/fstab
 mkdir /scratch
 mount /dev/md0 /scratch
