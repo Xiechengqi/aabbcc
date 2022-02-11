@@ -1,0 +1,2 @@
+# EXPORT LOTUS TO NODE-EXPORTER / PROMETHEUS
+* * * * *   reaper if /var/lib/prometheus/node-exporter/fetch-data.sh;  then ls /var/lib/prometheus/node-exporter/farcaster.prom; else rm /var/lib/prometheus/node-exporter/farcaster.prom.$$; fi
