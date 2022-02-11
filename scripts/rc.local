@@ -1,0 +1,10 @@
+#!/bin/bash
+swapoff -a
+cpufreq-set -g performance
+echo 3 > /proc/sys/vm/drop_caches
+echo 1 > /proc/sys/vm/zone_reclaim_mode
+#sysctl vm.nr_hugepages=1716
+echo 900 > /sys/devices/system/node/node0/hugepages/hugepages-1048576kB/nr_hugepages
+echo 816 > /sys/devices/system/node/node1/hugepages/hugepages-1048576kB/nr_hugepages
+systemctl daemon-reload && systemctl restart docker && systemctl restart kubelet
+exit 0
