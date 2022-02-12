@@ -33,6 +33,9 @@ sed -i "s#@HOSTNAME#${miner_hostname}#g" /usr/local/bin/fetch-data.sh
 # add crontab job
 curl -SsL https://raw.githubusercontent.com/Xiechengqi/aabbcc/master/scripts/lotus-exporter-farcaster -o /etc/cron.d/lotus-exporter-farcaster
 
+# install requirements
+pip3 list | grep py-multibase &> /dev/null || pip3 install py-multibase
+
 }
 
 main $@
