@@ -6,8 +6,8 @@
 # fetch lotus info to node-exporter prom file
 #
 
-tmpMetircPath="/data/metric/farcaster.prom.$$"
+tmpMetircPath="/data/metric/.farcaster"
 metricPath="/data/metric/farcaster.prom"
 
 /usr/local/bin/lotus-exporter-farcaster.py | sed -i "s/@MINERID/@HOSTNAME/g" > ${tmpMetircPath}
-mv /data/metric/farcaster.prom.$$ /data/metric/farcaster.prom
+mv ${tmpMetircPath} ${metricPath}
