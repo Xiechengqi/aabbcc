@@ -65,9 +65,9 @@ VERSION = "v2.0.3"
 # OVERRIDE AUTODETECTED CONFIG VALUES (should only be used if autodetection is failling)
 #
 # Example : MINER_URL = "http://127.0.0.1:2345/rpc/v0"
-MINER_URL = "http://127.0.0.1:2345/rpc/v0"
+MINER_URL = "@MINER_URL"
 MINER_TOKEN = "@MINER_TOKEN"
-DAEMON_URL = "http://@DAEMON_URL/rpc/v0"
+DAEMON_URL = "@DAEMON_URL"
 DAEMON_TOKEN = "@DAEMON_TOKEN"
 
 #################################################################################
