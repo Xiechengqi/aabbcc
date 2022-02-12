@@ -1,2 +1,2 @@
 # EXPORT LOTUS TO NODE-EXPORTER / PROMETHEUS
-* * * * * reaper bash /usr/local/bin/fetch-data.sh
+* * * * * root bash /usr/local/bin/fetch-data.sh
