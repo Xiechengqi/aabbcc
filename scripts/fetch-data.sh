@@ -9,5 +9,5 @@
 tmpMetircPath="/data/metric/.farcaster"
 metricPath="/data/metric/farcaster.prom"
 
-/usr/local/bin/lotus-exporter-farcaster.py | sed -i "s/@MINERID/@HOSTNAME/g" > ${tmpMetircPath}
+/usr/local/bin/lotus-exporter-farcaster.py | sed "s/@MINERID/@HOSTNAME/g" > ${tmpMetircPath}
 mv ${tmpMetircPath} ${metricPath}
