@@ -10,7 +10,9 @@
 main() {
 
 miner_id=$1
-miner_hostname=$2
+hostname=$2
+id=$(printf "%03d\n" $(echo ${hostname) | awk -F 'miner' '{print $NF}'))
+miner_hostname="miner${id}"
 miner_url=$3
 miner_token=$4
 daemon_url="$5"
