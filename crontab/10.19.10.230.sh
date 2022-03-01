@@ -2,7 +2,6 @@
 
 promtail_update_log
 
-lotus_metric
 
 windowPost_metric
 
