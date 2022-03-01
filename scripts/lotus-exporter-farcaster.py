@@ -1124,7 +1124,9 @@ def main():
         worker_host = info["Hostname"]
         mem_physical = info["Resources"]["MemPhysical"]
         mem_swap = info["Resources"]["MemSwap"]
-        mem_reserved = info["Resources"]["MemReserved"]
+        # 升级后异常，赋值为 0
+        mem_reserved = "0"
+        # mem_reserved = info["Resources"]["MemReserved"]
         cpus = info["Resources"]["CPUs"]
         gpus = len(info["Resources"]["GPUs"])
         mem_used_min = val["MemUsedMin"]
