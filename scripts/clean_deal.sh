@@ -20,7 +20,7 @@ logDirPath="/data/logs/deal_data" && mkdir -p ${logDirPath}
 logFilePath="${logDirPath}/clean.log"
 
 currentDataSize=$(du -sm ${dealDataPath} | awk '{print $1}')
-echo "【$(date "+%Y-%m-%d %H:%M:%S")】 ${dealDataPath} ... " >> ${logFilePath}
+echo "【$(date "+%Y-%m-%d %H:%M:%S")】 ${dealDataPath} ... ${currentDataSize}MB" >> ${logFilePath}
 
 if [ "${currentDataSize}" -gt "${maxData}" ]
 then
