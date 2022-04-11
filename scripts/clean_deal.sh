@@ -20,18 +20,22 @@ logDirPath="/data/logs/deal_data" && mkdir -p ${logDirPath}
 logFilePath="${logDirPath}/clean.log"
 
 currentDataSize=$(du -sm ${dealDataPath} | awk '{print $1}')
+echo "【$(date "+%Y-%m-%d %H:%M:%S")】 ${dealDataPath} ... ${currentDataSize}MB"
 echo "【$(date "+%Y-%m-%d %H:%M:%S")】 ${dealDataPath} ... ${currentDataSize}MB" >> ${logFilePath}
 
 if [ "${currentDataSize}" -gt "${maxData}" ]
 then
 
+echo "【$(date "+%Y-%m-%d %H:%M:%S")】 clean ${dealDataPath} ... "
 echo "【$(date "+%Y-%m-%d %H:%M:%S")】 clean ${dealDataPath} ... " >> ${logFilePath}
 find ${dealDataPath} -mmin +180 -type f -name "*" -exec rm -f {} \;
 currentDataSize=$(du -sm ${dealDataPath} | awk '{print $1}')
+echo "【$(date "+%Y-%m-%d %H:%M:%S")】 ${dealDataPath} ... ${currentDataSize}MB"
 echo "【$(date "+%Y-%m-%d %H:%M:%S")】 ${dealDataPath} ... ${currentDataSize}MB" >> ${logFilePath}
 
 fi
 
+echo "【$(date "+%Y-%m-%d %H:%M:%S")】 waiting for 3h ... "
 echo "【$(date "+%Y-%m-%d %H:%M:%S")】 waiting for 3h ... " >> ${logFilePath}
 sleep 3h
 
