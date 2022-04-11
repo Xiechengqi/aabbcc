@@ -27,6 +27,8 @@ then
 
 echo "【$(date "+%Y-%m-%d %H:%M:%S")】 clean ${dealDataPath} ... " >> ${logFilePath}
 find ${dealDataPath} -mmin +180 -type f -name "*" -exec rm -f {} \;
+currentDataSize=$(du -sm ${dealDataPath} | awk '{print $1}')
+echo "【$(date "+%Y-%m-%d %H:%M:%S")】 ${dealDataPath} ... ${currentDataSize}MB" >> ${logFilePath}
 
 fi
 
