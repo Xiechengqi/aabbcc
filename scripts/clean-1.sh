@@ -1,0 +1,1 @@
+for i in `ls /root/.lotusminer/cache | awk -F '-' '{print $NF}'`; do echo -n "$i " && lotus-miner sectors status $i | grep -i status | awk '{print $NF}' | grep -E 'PreCommit1|PreCommit2' && rm -rf /root/.lotusminer/cache/s-t01731371-${i} && rm -rf /root/.lotusminer/sealed/s-t01731371-${i} && rm -rf /root/.lotusminer/unsealed/s-t01731371-${i}; done
